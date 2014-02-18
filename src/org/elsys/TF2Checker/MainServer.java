@@ -12,13 +12,11 @@ import com.github.koraktor.steamcondenser.steam.community.SteamId;
 
 
 public class MainServer {
-	public static int PORT = 27015;
-	public static ServerSocket serverSocket;
-	public static void main(String[] args) throws IOException, SteamCondenserException {
+	public static void home () throws IOException, SteamCondenserException {
 
 		SteamId player = SteamId.create("Hadescho");
-		System.out.println(player.getGames());
-		//Logger.errorLog("TestTest");
+		
+		
 	}
 
 }
