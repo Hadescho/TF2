@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="C:/Users/Nikolay/Desktop/commons-lang3-3.2.1-bin/commons-lang3-3.2.1/commons-lang3-3.2.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="E:/Developer/JavaProjects/org.elsys.JerseyExample/WebContent/WEB-INF/lib/javax.ws.rs-api-2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
