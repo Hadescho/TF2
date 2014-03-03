@@ -1,0 +1,20 @@
+.userInfoContainer{
+	-moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -khtml-border-radius: 20px;
+    border-radius: 20px;
+    border-style: inset;
+    border-color: #f0f0f0;
+    background-color: #0f0f0f;
+    min-height: 150px;
+    min-width: 450px;
+    margin-top: 0px;
+	margin-left: 15px;
+	color: #f7f7f7;
+	display: none;
+}
+
+.realBody
+{
+	margin-top:60px;
+}

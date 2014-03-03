@@ -34,14 +34,14 @@ public class MainServer {
 	public static SteamUser GetUserInfo (String userName) throws IOException, SteamCondenserException {
 		SteamUser myUser;
 		try{
-			SteamId user = SteamId.create(userName);
-			myUser = new SteamUser(user.getNickname(),user.getLocation(),user.getAvatarIconUrl());
+			//SteamId user = SteamId.create(userName);
+			myUser = new SteamUser(userName);
 		}
 		catch(SteamCondenserException ex){
-			myUser = new SteamUser("Player not found","Please try agian","");
+			myUser = new SteamUser(-1);
 			return myUser;
 		}
-		System.out.println("Going through hell!");
+		System.out.println("Returning myUser");
 		return myUser;
 	}
 
