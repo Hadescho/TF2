@@ -1,7 +1,7 @@
 var user;
 function handleUserData(userData){
-	userData = "\"" + userData + "\""
-	user = jQuery.parseJSON(userData);
+	//userData = "\"" + userData + "\""
+	user = userData;
 	var borderCol;
 	console.log(user[0].Display);
 	if (user.isOnline){
@@ -31,7 +31,8 @@ $(document).ready(function(){
 				method:'POST',
 				url:'tf2/userSearch/',
 				data: userName,
-				contentType: 'text/plain',
+				contentType: 'application/json; charset=utf-8',
+				dataType: 'json',
 				success: handleUserData
 			});
 		}
