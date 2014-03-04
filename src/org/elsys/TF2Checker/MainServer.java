@@ -27,6 +27,9 @@ import com.github.koraktor.steamcondenser.steam.community.SteamId;
 
 @Path("")
 public class MainServer {
+	
+	final static String ApiKey = "5315e3ac4cd7b8bb188b4567";
+	
 	@POST
 	@Path("/userSearch")
 	@Produces(MediaType.APPLICATION_JSON)
