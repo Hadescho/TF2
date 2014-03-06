@@ -1,4 +1,12 @@
 var user;
+
+var API_KEY = "5315e3ac4cd7b8bb188b4567";
+
+function handleBPData(bpData){
+	var userBPinfo = bpData;
+	userBPinfo.Display();
+}
+
 function handleUserData(userData){
 	//userData = "\"" + userData + "\""
 	user = userData;
@@ -17,13 +25,20 @@ function handleUserData(userData){
 		borderCol = "#334c4c";
 		onlineText = "User is offline."
 	}
+	$.ajax({
+		method:'GET',
+		url:'http://backpack.tf/api/IGetUsers/v2/?steamids=' + user.id64 +'&format=json',
+		dataType: "json",
+		success: handleBPData
+		
+	});
 	$(".userInfoContainer").html("");
 	$(".userInfoContainer").append("<p class='.text-center' id='username'> " +user.username+ "</p>" +
 		"<img src='" + user.avatarURL +"' class='img-rounded col-lg-4'>"+ 
-		"<p class='col-lg-6'>" + user.location + "</p>");
-		"<p class='col-lg-4' style=' color: "+ borderCol +" '>" + onlineText + "</p>"
+		"<p class='col-lg-6'>" + user.location + "</p>" +
+		"<p class='col-lg-4' style=' color: "+ borderCol +" '>" + onlineText + "</p>");
 	$(".userInfoContainer").show();
-	alert('shouldHaveDoneIT');
+	
 }
 
 $(document).ready(function(){
