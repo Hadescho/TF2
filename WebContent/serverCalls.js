@@ -26,6 +26,10 @@ function handleUserData(userData){
 		onlineText = "User is offline."
 	}
 	
+	if (user.backpackValue == -1){
+		user.backpackValue = "Unable to find backpack!"
+	}
+	
 	$(".userInfoContainer").html("");
 	$(".userInfoContainer").append("<p class='.text-center' id='username'> " +user.username+ "</p>" +
 		"<img src='" + user.avatarURL +"' class='img-rounded col-lg-4'>"+ 

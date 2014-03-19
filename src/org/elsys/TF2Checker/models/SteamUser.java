@@ -17,6 +17,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import services.BackpackService;
+
 import com.github.koraktor.steamcondenser.exceptions.SteamCondenserException;
 import com.github.koraktor.steamcondenser.steam.community.SteamId;
 
@@ -33,14 +35,17 @@ public class SteamUser implements java.io.Serializable{
 	public boolean isInGame;
 	
 	public SteamUser(String Steamusername) throws SteamCondenserException, IOException{
+		long bpVal;
 		SteamId steamId = SteamId.create(Steamusername);
 		this.username = steamId.getNickname();
 		this.location = steamId.getLocation();
 		this.avatarURL = steamId.getAvatarMediumUrl();
 		this.isOnline = steamId.isOnline();
 		this.isInGame = steamId.isInGame();
-		this.id64 = String.valueOf(steamId.getSteamId64());
+		bpVal = steamId.getSteamId64();
+		this.id64 = String.valueOf(bpVal);
 		this.backpackValue = String.valueOf(this.BackpackValue());
+		BackpackService.getInstance().createBackpackValue(new DBUser(this.id64, bpVal));
 	}
 	public SteamUser(int i){
 		this.username = "User not found";
@@ -54,7 +59,7 @@ public class SteamUser implements java.io.Serializable{
 	
 	public float BackpackValue() throws IOException{
 		
-		String link = "http://backpack.tf/api/IGetUsers/v2/?steamids=" + this.id64 + "&format=json";
+		String link = "http://backpack.tf/api/IGetUsers/v3/?steamids=" + this.id64;
 		URL url = new URL(link);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.setRequestMethod("GET");
@@ -77,15 +82,22 @@ public class SteamUser implements java.io.Serializable{
 		JSONObject BPresponse = new JSONObject(response.toString());
 		BPresponse = BPresponse.getJSONObject("response");
 		if(BPresponse.getInt("success") == 1){
-			JSONObject players = BPresponse.getJSONObject("players");
-			JSONObject user = players.getJSONObject("0");
+			JSONArray players = BPresponse.getJSONArray("players");
+			JSONObject user = players.getJSONObject(0);
 			if (this.username.equals(user.getString("name"))){
-				System.out.println((float) user.getDouble("backpack_value"));
-				return (float) user.getDouble("backpack_value");
+				//System.out.println((float) user.getDouble("backpack_value"));
+				try{
+					JSONObject tfBackpack = user.getJSONObject("backpack_value");
+					return (float) tfBackpack.getDouble("440");
+				}
+				catch(Exception ex){
+					return -1.0f;
+				}
+				
 			}
 		}
 		
-		return 0.00f;
+		return -1.00f;
 	}
 	
 	public String serialize() throws JsonGenerationException, JsonMappingException, IOException{
