@@ -9,9 +9,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 
-@Entity(name="backpackValues")
+@Entity(name="DBUser")
 @NamedQueries({
-	@NamedQuery(name="byId", query="SELECT * FROM backpackValues WHERE id64=:id64")
+	@NamedQuery(name="byBackpackId", query="SELECT value,fetchDate FROM DBUser as bp WHERE id64=:id64")
 })
 public class DBUser {
 	@Id

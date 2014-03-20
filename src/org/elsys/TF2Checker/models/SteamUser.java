@@ -45,7 +45,10 @@ public class SteamUser implements java.io.Serializable{
 		bpVal = steamId.getSteamId64();
 		this.id64 = String.valueOf(bpVal);
 		this.backpackValue = String.valueOf(this.BackpackValue());
-		BackpackService.getInstance().createBackpackValue(new DBUser(this.id64, bpVal));
+		if(bpVal >=0){
+			BackpackService.getInstance().createBackpackValue(new DBUser(this.id64, bpVal));
+	
+		}
 	}
 	public SteamUser(int i){
 		this.username = "User not found";
