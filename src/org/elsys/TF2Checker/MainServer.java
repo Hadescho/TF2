@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -13,10 +14,14 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.elsys.TF2Checker.models.SteamUser;
+import org.elsys.TF2Checker.models.DBUser;
+
+import services.BackpackService;
 
 import com.github.koraktor.steamcondenser.*;
 import com.github.koraktor.steamcondenser.exceptions.SteamCondenserException;
@@ -47,6 +52,17 @@ public class MainServer {
 		}
 		System.out.println("Returning myUser");
 		return myUser;
+	}
+	
+	@GET
+	@Path("/backpackValues/{id64}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public static List<DBUser> GetBackpackValues(@PathParam("id64") long id64){
+		List<DBUser> backpackValues = BackpackService.getInstance().getBackpackValues(id64);
+		for(int i=0; i < backpackValues.size(); i++){
+			System.out.println(backpackValues.get(i).getId64() + "\t\t" + backpackValues.get(i).getValue() + "\t\t" + backpackValues.get(i).getFetchDate());
+		}
+		return backpackValues;
 	}
 
 }
