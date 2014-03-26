@@ -11,23 +11,24 @@ import javax.persistence.NamedQuery;
 
 @Entity(name="DBUser")
 @NamedQueries({
-	@NamedQuery(name="byBackpackId", query="SELECT value,fetchDate FROM DBUser as bp WHERE id64=:id64")
+	@NamedQuery(name="byBackpackId", query="SELECT u FROM DBUser u WHERE id64=:id64")
 })
 public class DBUser {
-	@Id
-	String id64;
+	@Column()
+	long id64;
 	
 	@Column()
 	float value;
 	
+	@Id
 	@Column()
 	Date fetchDate;
 
-	public String getId64() {
+	public long getId64() {
 		return id64;
 	}
 
-	public void setId64(String id64) {
+	public void setId64(long id64) {
 		this.id64 = id64;
 	}
 
@@ -47,14 +48,12 @@ public class DBUser {
 		this.fetchDate = fetchDate;
 	}
 
-	public DBUser(String id64, float value) {
-		super();
+	public DBUser() {
+	}
+	public DBUser(long id64, float value) {
 		this.id64 = id64;
 		this.value = value;
 		this.fetchDate = new Date();
 	}
-	
-	
-	
-	
+
 }

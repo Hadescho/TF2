@@ -34,7 +34,7 @@ public class BackpackService {
 		final EntityTransaction tx = em.getTransaction();
 		try {
 			tx.begin();
-			DBUser dbUser = new DBUser("000error000",-100.00f);
+			DBUser dbUser = new DBUser(-1,-100.00f);
 			
 		}
 		finally{
@@ -46,11 +46,12 @@ public class BackpackService {
 		em.close();
 	}
 	
-	public List<DBUser> getBackpackValues(){
+	public List<DBUser> getBackpackValues(long id64){
 		EntityManager em = emf.createEntityManager();
 		
 		try{
-			return em.createNamedQuery("byId",DBUser.class).getResultList();
+			//em.createQuery("SELECT value, fetchDate FROM DBUser where ");
+			return em.createNamedQuery("byBackpackId",DBUser.class).setParameter("id64", id64).getResultList();
 		}finally{
 			em.close();
 		}
