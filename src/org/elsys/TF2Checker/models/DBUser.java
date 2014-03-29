@@ -1,6 +1,7 @@
 package org.elsys.TF2Checker.models;
 
 import java.util.Date;
+import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,13 +15,15 @@ import javax.persistence.NamedQuery;
 	@NamedQuery(name="byBackpackId", query="SELECT u FROM DBUser u WHERE id64=:id64")
 })
 public class DBUser {
+	@Id
+	long id;
+	
 	@Column()
 	long id64;
 	
 	@Column()
 	float value;
 	
-	@Id
 	@Column()
 	Date fetchDate;
 
@@ -51,6 +54,7 @@ public class DBUser {
 	public DBUser() {
 	}
 	public DBUser(long id64, float value) {
+		this.id = (new Random()).nextLong();
 		this.id64 = id64;
 		this.value = value;
 		this.fetchDate = new Date();
