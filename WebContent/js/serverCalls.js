@@ -62,7 +62,6 @@ $(document).ready(function(){
 });
 
 function drawChart(id64){
-	console.log ("DC id64 " + id64);
 	$.ajax({
 		method: 'GET',
 		url: 'tf2/backpackValues/' + id64,
@@ -71,7 +70,13 @@ function drawChart(id64){
 	});
 }
 
-function successDrawChart(backpackList)
+function successDrawChart(backpackJSON)
 {
-	console.log(backpackList)
+	// var ctx = $("#BackpackChart").get(0).getContext("2d");
+	// var data = backpackJSON;
+	// console.log(data);
+	// var chart = new Chart(ctx).Line(data);
+
+	var chart = new CanvasJS.Chart("chartContainer",backpackJSON);
+	chart.render();
 }

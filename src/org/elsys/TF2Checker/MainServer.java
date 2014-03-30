@@ -3,6 +3,8 @@ package org.elsys.TF2Checker;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +22,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.elsys.TF2Checker.models.SteamUser;
 import org.elsys.TF2Checker.models.DBUser;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import services.BackpackService;
 
@@ -57,12 +61,47 @@ public class MainServer {
 	@GET
 	@Path("/backpackValues/{id64}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static List<DBUser> GetBackpackValues(@PathParam("id64") long id64){
+	public static String GetBackpackValues(@PathParam("id64") long id64) throws ParseException{
 		List<DBUser> backpackValues = BackpackService.getInstance().getBackpackValues(id64);
+		ArrayList<String > labels = new ArrayList<String >();
+		ArrayList<Integer> values = new ArrayList<Integer>();
 		for(int i=0; i < backpackValues.size(); i++){
 			System.out.println(backpackValues.get(i).getId64() + "\t\t" + backpackValues.get(i).getValue() + "\t\t" + backpackValues.get(i).getFetchDate());
+			labels.add((backpackValues.get(i).getFetchDate().toString()));
+			values.add(new Integer(Integer.parseInt(String.valueOf(backpackValues.get(i).getValue()).split("\\.")[0])));
+			
 		}
-		return backpackValues;
+		JSONObject retValues = new JSONObject();
+//		~~~~~~~~ ChartJS ~~~~~~~~~~
+//		JSONArray arr = new JSONArray();
+//		JSONObject datasets = new JSONObject();
+//		retValues.accumulate("labels", labels);
+//		datasets.accumulate("fillColor", "rgba(220,220,220,0.5)");
+//		datasets.accumulate("strokeColor", "rgba(220,220,220,1)");
+//		datasets.accumulate("pointColor", "rgba(220,150,150,1)");
+//		datasets.accumulate("pointStrokeColor", "#fff");
+//		datasets.accumulate("data", values);
+//		arr.put(datasets);
+//		retValues.accumulate("datasets" , datasets);
+//		System.out.println(retValues.toString());
+//		~~~~~~~~ ChartJSEnd ~~~~~~~~~~
+//		~~~~~~~~ CanvasJS ~~~~~~~~~~
+		JSONArray data = new JSONArray();
+		JSONObject dataObj = new JSONObject();
+			dataObj.put("type", "line");
+			JSONArray dataPoints = new JSONArray();
+			for(int i=0; i < labels.size(); i++){
+				JSONObject dataPObject = new JSONObject();
+				dataPObject.put("x", labels.get(i));
+				dataPObject.put("y", values.get(i));
+				dataPoints.put(dataPObject);
+			}
+			
+		dataObj.put("dataPoints", dataPoints);
+		data.put(dataObj);
+		retValues.put("data",data);
+//		~~~~~~~~ CanvasJSEND ~~~~~~~~
+		return retValues.toString();
 	}
 
 }
