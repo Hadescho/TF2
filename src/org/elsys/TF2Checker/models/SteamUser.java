@@ -72,7 +72,7 @@ public class SteamUser implements java.io.Serializable {
 	}
 
 	public float BackpackValue() throws IOException {
-		// if (this.id64 != -1){
+		if (this.id64 != -1){
 		String link = "http://backpack.tf/api/IGetUsers/v3/?steamids="
 				+ this.id64;
 		URL url = new URL(link);
@@ -100,7 +100,7 @@ public class SteamUser implements java.io.Serializable {
 		if (BPresponse.getInt("success") == 1) {
 			JSONArray players = BPresponse.getJSONArray("players");
 			JSONObject user = players.getJSONObject(0);
-			if (this.username.equals(user.getString("name"))) {
+			//if (this.username.equals(user.getString("name"))) {
 				try {
 					JSONObject tfBackpack = user
 							.getJSONObject("backpack_value");
@@ -109,18 +109,18 @@ public class SteamUser implements java.io.Serializable {
 					return -1.0f;
 				}
 
-			}
+			//}
 		}
-		// }
+		 }
 		return -1.00f;
 	}
 
-	public String serialize() throws JsonGenerationException,
-			JsonMappingException, IOException {
-		ObjectMapper mapper = new ObjectMapper();
-		return mapper.writeValueAsString(this);
-
-	}
+//	public String serialize() throws JsonGenerationException,
+//			JsonMappingException, IOException {
+//		ObjectMapper mapper = new ObjectMapper();
+//		return mapper.writeValueAsString(this);
+//
+//	}
 
 	public String getUsername() {
 		return username;
