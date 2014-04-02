@@ -38,16 +38,17 @@ function handleUserData(userData){
 		"<p> Backpack Value: " + user.backpackValue + "</p>");
 	$(".userInfoContainer").show();
 	console.log("id64 : " + user.id64);
-
-	drawChart(user.id64);
-	
+	if (user.backpackValue >= 0 )
+	{
+		drawChart(user.id64);
+	}	
 }
 
 $(document).ready(function(){
 	
 	
 	$('#search').click(function(){
-		
+		$("#chartContainer").html("");
 		var userName = $("#searchUserBox").val();
 		if (userName !== ""){	
 			$.ajax({
@@ -72,11 +73,20 @@ function drawChart(id64){
 
 function successDrawChart(backpackJSON)
 {
+	var deb = 0;
 	// var ctx = $("#BackpackChart").get(0).getContext("2d");
 	// var data = backpackJSON;
 	// console.log(data);
 	// var chart = new Chart(ctx).Line(data);
+	// for(var key in backpackJSON["data"][0]["dataPoints"])
+	// {
 
+	// 	key.x = new Date(key.x);
+	// }
+	for(var i = 0; i<backpackJSON["data"][0]["dataPoints"].length; i++)
+	{
+		backpackJSON["data"][0]["dataPoints"][i].x = new Date(backpackJSON["data"][0]["dataPoints"][i].x);
+	}
 	var chart = new CanvasJS.Chart("chartContainer",backpackJSON);
 	chart.render();
 }

@@ -36,6 +36,13 @@ public class SteamUser implements java.io.Serializable {
 	public SteamUser(String Steamusername) throws SteamCondenserException,
 			IOException {
 		SteamId steamId = SteamId.create(Steamusername);
+		initialize(steamId);
+	}
+	/**
+	 * @param steamId
+	 * @throws IOException
+	 */
+	private void initialize(SteamId steamId) throws IOException {
 		this.username = steamId.getNickname();
 		this.location = steamId.getLocation();
 		this.avatarURL = steamId.getAvatarMediumUrl();
@@ -43,11 +50,15 @@ public class SteamUser implements java.io.Serializable {
 		this.isInGame = steamId.isInGame();
 		this.id64 = steamId.getSteamId64();
 		this.backpackValue = this.BackpackValue();
-		// if(this.backpackValue != -1.0f){
-		DBUser dbu = new DBUser(this.id64, this.backpackValue);
-		BackpackService.getInstance().createBackpackValue(dbu);
-		// }
+		if(this.backpackValue > -1.0f){
+			DBUser dbu = new DBUser(this.id64, this.backpackValue);
+			BackpackService.getInstance().createBackpackValue(dbu);
+		}
 		System.out.println(username + "  " + id64 + "  " + backpackValue);
+	}
+	public SteamUser(long SteamId64) throws SteamCondenserException, IOException{
+		SteamId steamId = SteamId.create(SteamId64);
+		initialize(steamId);
 	}
 
 	public SteamUser(int i) {

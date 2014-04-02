@@ -22,5 +22,12 @@
 .graph
 {
     height: 300px;
-    width: 80%;
+    width: 600px;
+}
+
+.chartCC
+{
+    border: 1px, solid, #000;
+    margin: 10px;
+    clear: both;
 }

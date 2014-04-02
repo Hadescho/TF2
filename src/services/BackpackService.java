@@ -50,7 +50,6 @@ public class BackpackService {
 		EntityManager em = emf.createEntityManager();
 		
 		try{
-			//em.createQuery("SELECT value, fetchDate FROM DBUser where ");
 			return em.createNamedQuery("byBackpackId",DBUser.class).setParameter("id64", id64).getResultList();
 		}finally{
 			em.close();

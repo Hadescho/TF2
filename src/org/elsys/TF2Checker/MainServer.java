@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +49,15 @@ public class MainServer {
 		SteamUser myUser;
 		try{
 			//SteamId user = SteamId.create(userName);
-			myUser = new SteamUser(userName);
+			if (userName.matches("[0-9]+") && userName.length() > 2) 
+			{
+				Long id64 = Long.parseLong(userName);
+				myUser = new SteamUser(id64);
+			}
+			else
+			{
+				myUser = new SteamUser(userName);
+			}
 		}
 		catch(SteamCondenserException ex){
 			myUser = new SteamUser(-1);
@@ -63,15 +72,20 @@ public class MainServer {
 	@Produces(MediaType.APPLICATION_JSON)
 	public static String GetBackpackValues(@PathParam("id64") long id64) throws ParseException{
 		List<DBUser> backpackValues = BackpackService.getInstance().getBackpackValues(id64);
-		ArrayList<String > labels = new ArrayList<String >();
-		ArrayList<Integer> values = new ArrayList<Integer>();
+		ArrayList<Long > labels = new ArrayList<Long >();
+		ArrayList<Float> values = new ArrayList<Float >();
 		for(int i=0; i < backpackValues.size(); i++){
 			System.out.println(backpackValues.get(i).getId64() + "\t\t" + backpackValues.get(i).getValue() + "\t\t" + backpackValues.get(i).getFetchDate());
-			labels.add((backpackValues.get(i).getFetchDate().toString()));
-			values.add(new Integer(Integer.parseInt(String.valueOf(backpackValues.get(i).getValue()).split("\\.")[0])));
+			labels.add((backpackValues.get(i).getFetchDate().getTime()));
+			values.add(backpackValues.get(i).getValue());
 			
 		}
 		JSONObject retValues = new JSONObject();
+		JSONObject axisX = new JSONObject();
+		//axisX.put("interval", 10);
+		//axisX.put("intervalType","time");
+		axisX.put("labelAngle",-50);
+		retValues.put("axisX",axisX);
 //		~~~~~~~~ ChartJS ~~~~~~~~~~
 //		JSONArray arr = new JSONArray();
 //		JSONObject datasets = new JSONObject();
@@ -94,6 +108,7 @@ public class MainServer {
 				JSONObject dataPObject = new JSONObject();
 				dataPObject.put("x", labels.get(i));
 				dataPObject.put("y", values.get(i));
+				//dataPObject.put("label", new Date(labels.get(i)));
 				dataPoints.put(dataPObject);
 			}
 			
