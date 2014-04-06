@@ -22,9 +22,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
+import org.codehaus.jackson.annotate.JsonMethod;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.elsys.TF2Checker.models.SteamUser;
 import org.elsys.TF2Checker.models.DBUser;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.BackpackService;
@@ -46,7 +50,7 @@ public class MainServer {
 	@Path("/userSearch")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.TEXT_PLAIN)
-	public static SteamUser GetUserInfo (String userName) throws IOException, SteamCondenserException {
+	public static String GetUserInfo (String userName) throws IOException, SteamCondenserException {
 		SteamUser myUser;
 		try{
 			//SteamId user = SteamId.create(userName);
@@ -62,10 +66,25 @@ public class MainServer {
 		}
 		catch(SteamCondenserException ex){
 			myUser = new SteamUser(-1);
-			return myUser;
+			return strigifier(myUser).toString();
 		}
 		System.out.println("Returning myUser");
-		return myUser;
+		JSONObject myJ = strigifier(myUser);
+		System.out.println(myJ.toString(1));
+		return myJ.toString();
+	}
+
+	/**
+	 * @param myUser
+	 * @return
+	 * @throws JSONException
+	 */
+	private static JSONObject strigifier(SteamUser myUser) throws JSONException {
+		JSONObject myJ = new JSONObject(myUser);
+		myJ.remove("id64");
+		myJ.put("id64",String.valueOf(myUser.id64));
+		myJ.put("backpackValue", String.valueOf(myUser.backpackValue));
+		return myJ;
 	}
 	
 	@GET

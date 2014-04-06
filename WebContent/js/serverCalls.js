@@ -9,25 +9,27 @@ function handleBPData(bpData){
 
 function handleUserData(userData){
 	//userData = "\"" + userData + "\""
-	user = userData;
+	var user = userData;
+	console.log(user);
+	//user.backpackValue = user.backpackValue.parseFloat();
 	var borderCol;
 	var onlineText;
 	//console.log(user[0].Display);
 	if (user.isOnline){
 		borderCol = "#00B800";
-		onlineText = "User is online."
+		onlineText = "User is online.";
 	}
 	else if(user.isInGame){
 		borderCol = "#1804CC";
-		onlineText = "User is in a game."
+		onlineText = "User is in a game.";
 	}
 	else{
 		borderCol = "#334c4c";
-		onlineText = "User is offline."
+		onlineText = "User is offline.";
 	}
 	
 	if (user.backpackValue == -1){
-		user.backpackValue = "Unable to find backpack!"
+		user.backpackValue = "Unable to find backpack!";
 	}
 	
 	$(".userInfoContainer").html("");
@@ -56,6 +58,7 @@ $(document).ready(function(){
 				url:'tf2/userSearch/',
 				data: userName,
 				contentType: 'text/plain',
+				dataType: 'json',
 				success: handleUserData
 			});
 		}
