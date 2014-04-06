@@ -50,10 +50,10 @@ public class SteamUser implements java.io.Serializable {
 		this.isInGame = steamId.isInGame();
 		this.id64 = steamId.getSteamId64();
 		this.backpackValue = this.BackpackValue();
-		if(this.backpackValue > -1.0f){
+		//if(this.backpackValue > -1.0f){
 			DBUser dbu = new DBUser(this.id64, this.backpackValue);
 			BackpackService.getInstance().createBackpackValue(dbu);
-		}
+		//}
 		System.out.println(username + "  " + id64 + "  " + backpackValue);
 	}
 	public SteamUser(long SteamId64) throws SteamCondenserException, IOException{

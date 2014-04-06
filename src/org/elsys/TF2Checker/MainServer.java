@@ -3,6 +3,7 @@ package org.elsys.TF2Checker;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -70,7 +71,8 @@ public class MainServer {
 	@GET
 	@Path("/backpackValues/{id64}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public static String GetBackpackValues(@PathParam("id64") long id64) throws ParseException{
+	public static String GetBackpackValues(@PathParam("id64") long id64) throws ParseException, SQLException{
+		Boolean status = false;
 		List<DBUser> backpackValues = BackpackService.getInstance().getBackpackValues(id64);
 		ArrayList<Long > labels = new ArrayList<Long >();
 		ArrayList<Float> values = new ArrayList<Float >();
@@ -105,6 +107,7 @@ public class MainServer {
 			dataObj.put("type", "line");
 			JSONArray dataPoints = new JSONArray();
 			for(int i=0; i < labels.size(); i++){
+				status = true;
 				JSONObject dataPObject = new JSONObject();
 				dataPObject.put("x", labels.get(i));
 				dataPObject.put("y", values.get(i));
@@ -115,6 +118,7 @@ public class MainServer {
 		dataObj.put("dataPoints", dataPoints);
 		data.put(dataObj);
 		retValues.put("data",data);
+		retValues.put("status",status);
 //		~~~~~~~~ CanvasJSEND ~~~~~~~~
 		return retValues.toString();
 	}

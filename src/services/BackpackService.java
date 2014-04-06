@@ -1,5 +1,12 @@
 package services;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -46,14 +53,41 @@ public class BackpackService {
 		em.close();
 	}
 	
-	public List<DBUser> getBackpackValues(long id64){
-		EntityManager em = emf.createEntityManager();
+	public List<DBUser> getBackpackValues(long id64) throws SQLException{
+	//	EntityManager em = emf.createEntityManager();
 		
+//		try{
+//			return em.createNamedQuery("byBackpackId",DBUser.class).setParameter("id64", id64).getResultList();
+//		}finally{
+//			em.close();
+//		}
+		List<DBUser> retList = new ArrayList<DBUser>();
+		Connection con = null;
 		try{
-			return em.createNamedQuery("byBackpackId",DBUser.class).setParameter("id64", id64).getResultList();
-		}finally{
-			em.close();
+		con = DriverManager.getConnection(
+			 "jdbc:derby:E:\\Developer\\eclipse-jee-kepler-SR1-win32-x86_64\\eclipse\\tf2checker");
+			}
+		catch(java.sql.SQLException ex){
+				
+			System.out.println(ex.getMessage() +"/n/n " + ex.getStackTrace());
+			return null;
 		}
+		String parsedid64 = String.valueOf(id64);
+		
+		parsedid64 = parsedid64.replaceAll("[^\\d.]", "");
+		System.out.println("\n\n-------------------" + parsedid64 + "---------------------\n\n");
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery
+		 ("SELECT * FROM DBUser WHERE DBUser.id64=" + id64 );
+		while (rs.next()) {
+			long rid64 = rs.getLong("id64");
+			float val = rs.getFloat("value");
+			Date fetchdate = rs.getDate("fetchDate");
+			//System.out.println(id64 + " | " + val + " | " + fetchdate);
+			retList.add(new DBUser(rid64,val,fetchdate));
+			
+		}
+		return retList;
 	}
 	
 	public static BackpackService getInstance(){

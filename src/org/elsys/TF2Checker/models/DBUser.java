@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -15,6 +16,7 @@ import javax.persistence.NamedQuery;
 	@NamedQuery(name="byBackpackId", query="SELECT u FROM DBUser u WHERE id64=:id64")
 })
 public class DBUser {
+	public static long idSub = 76561100000000000l;
 	@Id
 	long id;
 	
@@ -54,10 +56,20 @@ public class DBUser {
 	public DBUser() {
 	}
 	public DBUser(long id64, float value) {
-		this.id = (new Random()).nextLong();
+		Date date = new Date();
+		Random ran = new Random(date.getTime());
+		this.id = Math.abs(ran.nextLong());
 		this.id64 = id64;
 		this.value = value;
 		this.fetchDate = new Date();
 	}
-
+	
+	public DBUser(long id64, float value, Date fetchdate){
+		Date date = new Date();
+		Random ran = new Random(date.getTime());
+		this.id = Math.abs(ran.nextLong());
+		this.id64 = id64;
+		this.value = value;
+		this.fetchDate = fetchdate;
+	}
 }
