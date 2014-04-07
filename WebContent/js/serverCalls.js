@@ -76,7 +76,6 @@ function drawChart(id64){
 
 function successDrawChart(backpackJSON)
 {
-	var deb = 0;
 	// var ctx = $("#BackpackChart").get(0).getContext("2d");
 	// var data = backpackJSON;
 	// console.log(data);
