@@ -37,9 +37,6 @@ public class User {
 		this.id64 = id64;
 	}
 	
-	public User(){
-		
-	}
 	
 	public User(String email, String password , long id64){
 		this.id64 = id64;

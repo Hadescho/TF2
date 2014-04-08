@@ -27,11 +27,13 @@ import org.codehaus.jackson.annotate.JsonMethod;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.elsys.TF2Checker.models.SteamUser;
 import org.elsys.TF2Checker.models.DBUser;
+import org.elsys.TF2Checker.models.User;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import services.BackpackService;
+import services.UserService;
 
 import com.github.koraktor.steamcondenser.*;
 import com.github.koraktor.steamcondenser.exceptions.SteamCondenserException;
@@ -73,7 +75,24 @@ public class MainServer {
 		System.out.println(myJ.toString(1));
 		return myJ.toString();
 	}
-
+	@POST
+	@Path("/userSearch")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public static String GetLocalUser (JSONObject myJ){
+		String email = myJ.getString("email");
+		String password = myJ.getString("password");
+		User myUser = UserService.getInstance().getUsers(email, password);
+		return stringifier(myUser).toString();
+	}
+	
+	private static JSONObject stringifier(User myUser){
+		JSONObject myJ = new JSONObject(myUser);
+		myJ.remove("id64");
+		myJ.put("id64", String.valueOf(myUser.getId64()));
+		return myJ;
+	}
+	
 	/**
 	 * @param myUser
 	 * @return
