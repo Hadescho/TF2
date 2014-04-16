@@ -10,13 +10,13 @@ import javax.persistence.Id;
 @Entity(name="User")
 public class User {
 	@Id
-	long id;
+	private long id;
+	@Column(unique=true)
+	public String email;
 	@Column
-	String email;
+	private String password;
 	@Column
-	String password;
-	@Column
-	long id64;
+	public long id64;
 	
 	public String getEmail() {
 		return email;
@@ -44,6 +44,4 @@ public class User {
 		this.email = email;
 		this.id = Math.abs(new Random((new Date()).getTime()).nextLong());
 	}
-	
-	
 }

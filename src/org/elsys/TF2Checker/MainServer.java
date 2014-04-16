@@ -76,14 +76,29 @@ public class MainServer {
 		return myJ.toString();
 	}
 	@POST
-	@Path("/userSearch")
+	@Path("/localUserSearch")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public static String GetLocalUser (JSONObject myJ){
 		String email = myJ.getString("email");
 		String password = myJ.getString("password");
 		User myUser = UserService.getInstance().getUsers(email, password);
+		System.out.println(myUser.email + "\t" + myUser.getId64());
 		return stringifier(myUser).toString();
+	}
+	
+	@POST
+	@Path("/api/register")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public static void register(String input){
+		JSONObject myObj = new JSONObject(input);
+		System.out.println(myObj.toString(6));
+		User myUser = new User(myObj.getString("email"), 
+				myObj.getString("password"), Long.parseLong(myObj.getString("id64")));
+		System.out.println(myUser.email + "\t" + myUser.getPassword() + "\t" + myUser.id64);
+		UserService.getInstance().createUser(myUser);
+		
 	}
 	
 	private static JSONObject stringifier(User myUser){
@@ -122,23 +137,8 @@ public class MainServer {
 		}
 		JSONObject retValues = new JSONObject();
 		JSONObject axisX = new JSONObject();
-		//axisX.put("interval", 10);
-		//axisX.put("intervalType","time");
 		axisX.put("labelAngle",-50);
 		retValues.put("axisX",axisX);
-//		~~~~~~~~ ChartJS ~~~~~~~~~~
-//		JSONArray arr = new JSONArray();
-//		JSONObject datasets = new JSONObject();
-//		retValues.accumulate("labels", labels);
-//		datasets.accumulate("fillColor", "rgba(220,220,220,0.5)");
-//		datasets.accumulate("strokeColor", "rgba(220,220,220,1)");
-//		datasets.accumulate("pointColor", "rgba(220,150,150,1)");
-//		datasets.accumulate("pointStrokeColor", "#fff");
-//		datasets.accumulate("data", values);
-//		arr.put(datasets);
-//		retValues.accumulate("datasets" , datasets);
-//		System.out.println(retValues.toString());
-//		~~~~~~~~ ChartJSEnd ~~~~~~~~~~
 //		~~~~~~~~ CanvasJS ~~~~~~~~~~
 		JSONArray data = new JSONArray();
 		JSONObject dataObj = new JSONObject();
@@ -149,7 +149,6 @@ public class MainServer {
 				JSONObject dataPObject = new JSONObject();
 				dataPObject.put("x", labels.get(i));
 				dataPObject.put("y", values.get(i));
-				//dataPObject.put("label", new Date(labels.get(i)));
 				dataPoints.put(dataPObject);
 			}
 			
@@ -160,5 +159,69 @@ public class MainServer {
 //		~~~~~~~~ CanvasJSEND ~~~~~~~~
 		return retValues.toString();
 	}
-
+	
+	@GET
+	@Path("/backpackValues/{idFirst}&{idSecond}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public static String GetBackpackComparison(@PathParam("idFirst") String first, @PathParam("idSecond") String second) throws SQLException, SteamCondenserException{
+		Boolean status = false;
+		SteamId steamFirst = SteamId.create(first);
+		long idFirst = steamFirst.getSteamId64();
+		SteamId steamSecond = SteamId.create(second);
+		long idSecond = steamSecond.getSteamId64();
+		List<DBUser> backpackValuesFirst = BackpackService.getInstance().getBackpackValues(idFirst);
+		List<DBUser> backpackValuesSecond = BackpackService.getInstance().getBackpackValues(idSecond);
+		ArrayList<Long > labelsFirst = new ArrayList<Long >();
+		ArrayList<Long > labelsSecond = new ArrayList<Long >();
+		ArrayList<Float> valuesFirst = new ArrayList<Float>();
+		ArrayList<Float>  valuesSecond = new ArrayList<Float>();
+		for(int i = 0; i < backpackValuesFirst.size(); i++){
+			System.out.println(backpackValuesFirst.get(i).getId64() + "\t\t" + backpackValuesFirst.get(i).getValue() + "\t\t" + backpackValuesFirst.get(i).getFetchDate());
+			labelsFirst.add((backpackValuesFirst.get(i).getFetchDate().getTime()));
+			valuesFirst.add(backpackValuesFirst.get(i).getValue());
+		}
+		for(int i = 0; i < backpackValuesSecond.size(); i++){
+			System.out.println(backpackValuesSecond.get(i).getId64() + "\t\t" + backpackValuesSecond.get(i).getValue() + "\t\t" + backpackValuesSecond.get(i).getFetchDate());
+			labelsSecond.add((backpackValuesSecond.get(i).getFetchDate().getTime()));
+			valuesSecond.add(backpackValuesSecond.get(i).getValue());
+		}
+		JSONObject retValues = new JSONObject();
+		JSONObject axisX = new JSONObject();
+		axisX.put("labelAngle",-50);
+		retValues.put("axisX",axisX);
+		JSONArray data = new JSONArray();
+		JSONObject dataObj = new JSONObject();
+		dataObj.put("type", "line");
+		dataObj.put("showInLegend", true);
+		dataObj.put("name",steamFirst.getNickname());
+		JSONArray dataPoints = new JSONArray();
+		for(int i=0; i < labelsFirst.size(); i++){
+			status = true;
+			JSONObject dataPObject = new JSONObject();
+			dataPObject.put("x", labelsFirst.get(i));
+			dataPObject.put("y", valuesFirst.get(i));
+			dataPoints.put(dataPObject);
+		}
+		JSONObject dataObjSecond = new JSONObject();
+		dataObjSecond.put("type","line");
+		dataObjSecond.put("showInLegend",true);
+		dataObjSecond.put("name",steamSecond.getNickname());
+		JSONArray dataPointsSecond = new JSONArray();
+		for(int i=0; i < labelsSecond.size(); i++){
+			status = true;
+			JSONObject dataPObject = new JSONObject();
+			dataPObject.put("x", labelsSecond.get(i));
+			dataPObject.put("y", valuesSecond.get(i));
+			dataPointsSecond.put(dataPObject);
+		}
+			
+		dataObj.put("dataPoints", dataPoints);
+		dataObjSecond.put("dataPoints",dataPointsSecond);
+		data.put(dataObj);
+		data.put(dataObjSecond);
+		retValues.put("data",data);
+		retValues.put("status",status);
+		
+		return retValues.toString();
+	}
 }

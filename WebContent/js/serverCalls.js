@@ -32,7 +32,7 @@ function handleUserData(userData){
 		user.backpackValue = "Unable to find backpack!";
 	}
 	
-	$(".userInfoContainer").html("");
+	
 	$(".userInfoContainer").append("<p class='.text-center' id='username'> " +user.username+ "</p>" +
 		"<img src='" + user.avatarURL +"' class='img-rounded col-lg-4'>"+ 
 		"<p class='col-lg-6'>" + user.location + "</p>" +
@@ -51,17 +51,53 @@ $(document).ready(function(){
 	
 	$('#search').click(function(){
 		$("#chartContainer").html("");
-		var userName = $("#searchUserBox").val();
-		if (userName !== ""){	
-			$.ajax({
-				method:'POST',
-				url:'tf2/userSearch/',
-				data: userName,
-				contentType: 'text/plain',
-				dataType: 'json',
-				success: handleUserData
+		$(".userInfoContainer").html("");
+		var searchBox = $("#searchUserBox");
+		var userName = searchBox.val();
+		if (userName !== "")
+			if (!(userName.indexOf(',') + 1 || userName.indexOf(' ') + 1 || userName.indexOf('&') + 1)){
+				alert('Normal search');
+				$.ajax({
+					method:'POST',
+					url:'tf2/userSearch/',
+					data: userName,
+					contentType: 'text/plain',
+					dataType: 'json',
+					success: handleUserData
 			});
-		}
+		}else{
+			var userNames = userName.split(/[\s,&]+/);
+			console.log(userNames);
+			if (userNames.length > 2){
+				searchBox.val('Working with only 1 or 2 ids (for now).');
+				return;
+			}
+			alert('Comparison search');
+			$.ajax({
+				method:'GET',
+				url:'tf2/backpackValues/' + userNames[0] + '&' + userNames[1],
+				dataType: 'json',
+				success: handleComparison
+			});	
+			}
+	});
+	$('#registerBtn').click(function(){
+	
+		var myUser = {};
+		myUser["email"] = $("#email").val();
+		myUser["password"] = $("#pass").val();
+		myUser["id64"] = $("#id64").val();
+		console.log(myUser.toString());
+		$.ajax({
+			method:'POST',
+			url:'tf2/api/register',
+			data: myUser,
+			contentType: 'application/json',
+			success: function(){
+				console.log("Sent");
+				window.navigate(".\index.html");
+			}
+		});
 	});
 });
 
@@ -76,19 +112,24 @@ function drawChart(id64){
 
 function successDrawChart(backpackJSON)
 {
-	// var ctx = $("#BackpackChart").get(0).getContext("2d");
-	// var data = backpackJSON;
-	// console.log(data);
-	// var chart = new Chart(ctx).Line(data);
-	// for(var key in backpackJSON["data"][0]["dataPoints"])
-	// {
+	var chart = new CanvasJS.Chart("chartContainer",formatDates(backpackJSON));
+	chart.render();
+}
 
-	// 	key.x = new Date(key.x);
-	// }
+function handleComparison(comparisonJSON)
+{
+	successDrawChart(comparisonJSON);
+}
+
+function formatDates(backpackJSON)
+{
 	for(var i = 0; i<backpackJSON["data"][0]["dataPoints"].length; i++)
 	{
 		backpackJSON["data"][0]["dataPoints"][i].x = new Date(backpackJSON["data"][0]["dataPoints"][i].x);
+		if(backpackJSON["data"][1] !== undefined)
+		{
+			backpackJSON["data"][1]["dataPoints"][i].x = new Date(backpackJSON["data"][1]["dataPoints"][i].x);
+		}
 	}
-	var chart = new CanvasJS.Chart("chartContainer",backpackJSON);
-	chart.render();
+	return backpackJSON;
 }

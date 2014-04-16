@@ -55,6 +55,7 @@ public class DBUser {
 
 	public DBUser() {
 	}
+	
 	public DBUser(long id64, float value) {
 		Date date = new Date();
 		Random ran = new Random(date.getTime());
