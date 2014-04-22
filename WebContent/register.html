@@ -23,23 +23,31 @@
 		<div class="text-muted headerP col-lg-4 logo" >
 			<a href="./index.html"><small>TF2Checker</small></a>
 		</div>
-		<a href=".\register.html"> <button class="btn btn-success">Register</button> </a>
+		
+		<a href=".\login.html"> <button class="btn btn-info">Login</button> </a>
 		<div class="input-group pull-right col-lg-4">
 			<input type="text"class="form-control"  id="searchUserBox" >
 			<span class="input-group-btn">
-				 <button class="btn btn-default" id="search">Search</button>
+				 <button class="btn btn-default btn-primary" id="search">Search</button>
 			</span>
 		</div>
 	</div>
 	<div class="logForm">
-		<div class="formHolder">
-			
-				<br />
-				<input type="email" id="email" placeholder="E-mail"><br />
-				<input type="password" id="pass" placeholder="Password"><br />
-				<input type="text" id="id64" placeholder="Enter you id64 or customId here"><br />
-				<button class="btn btn-default" id="registerBtn">Register</button>
-			
+		<div class="row formHolder">
+			<div class="col-lg-4"></div>
+			<div class="panel panel-default col-lg-4">
+				<div class="panel-heading ph">Register</div>
+				<div class="panel-body">
+					<span class="input-group-addon">E-mail:</span>
+					<input type="email" class="form-control" id="email" placeholder="E-mail"><br />
+					<span class="input-group-addon">Password</span>
+					<input type="password" class="form-control" id="pass" placeholder="Password"><br />
+					<span class="input-group-addon">ID64</span>
+					<input type="text" class="form-control" id="id64" placeholder="Enter you id64 or customId here"><br />
+					<button class="btn btn-default" id="registerBtn">Register</button>
+				</div>
+			</div>
+			<div class="col-lg-4"></div>
 		</div>
   	</div>
 </body>

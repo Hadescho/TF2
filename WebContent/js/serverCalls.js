@@ -24,7 +24,7 @@ function handleUserData(userData){
 		onlineText = "User is in a game.";
 	}
 	else{
-		borderCol = "#334c4c";
+		borderCol = "#A3A375";
 		onlineText = "User is offline.";
 	}
 	
@@ -34,11 +34,11 @@ function handleUserData(userData){
 	
 	
 	$(".userInfoContainer").append("<p class='text-center' id='username'> " +user.username+ "</p>" +
-		"<img src='" + user.avatarURL +"' class='img-rounded col-lg-4'>"+ 
+		"<img src='" + user.avatarURL +"' class='img-rounded col-lg-4 avatar'>"+ 
 		"<p class='col-lg-6'>" + user.location + "</p>" +
 		"<p class='col-lg-4' style=' color: "+ borderCol +" '>" + onlineText + "</p>"+
 		"<p> Backpack Value: " + user.backpackValue + "</p>");
-	$(".userInfoContainer").show();
+	$(".userInfoContainer").fadeIn(1000);
 	console.log("id64 : " + user.id64);
 	if (user.backpackValue >= 0 )
 	{
@@ -50,13 +50,15 @@ $(document).ready(function(){
 	
 	
 	$('#search').click(function(){
+		$("#indexJumbo").fadeOut(500);
+		$(".userInfoContainer").fadeOut(500);
 		$("#chartContainer").html("");
 		$(".userInfoContainer").html("");
 		var searchBox = $("#searchUserBox");
 		var userName = searchBox.val();
 		if (userName !== "")
 			if (!(userName.indexOf(',') + 1 || userName.indexOf(' ') + 1 || userName.indexOf('&') + 1)){
-				alert('Normal search');
+				console.log('Normal search');
 				$.ajax({
 					method:'POST',
 					url:'tf2/userSearch/',
@@ -72,7 +74,7 @@ $(document).ready(function(){
 				searchBox.val('Working with only 1 or 2 ids (for now).');
 				return;
 			}
-			alert('Comparison search');
+			console.log('Comparison search');
 			$.ajax({
 				method:'GET',
 				url:'tf2/backpackValues/' + userNames[0] + '&' + userNames[1],

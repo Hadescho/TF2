@@ -22,27 +22,37 @@
 			<a href="./index.html"><small>TF2Checker</small></a>
 		</div>
 		<a href=".\register.html"> <button class="btn btn-success">Register</button> </a>
+		<!-- <a href=".\login.html"> <button class="btn btn-info">Login</button> </a>  -->
 		<div class="input-group pull-right col-lg-4">
 			<input type="text"class="form-control"  id="searchUserBox" >
 			<span class="input-group-btn">
-				 <button class="btn btn-default" id="search">Search</button>
+				 <button class="btn btn-default btn-primary" id="search">Search</button>
 			</span>
 		</div>
 	</div>
 	
 	<div class="logForm">
-		<div class="alert alert-error">
-			<button type="button" class="close" data-dismiss="alert">×</button>
-			<p>Failed to login!</p>
+		
+		<div class="row formHolder">
+			<div class="col-lg-4"></div>
+			<div class="panel panel-default col-lg-4">
+			<div class="panel panel-danger">
+				<div class="panel-heading">Login Failed</div>
+				<div class="panel-body">We are sorry, but your login failed. Please Try again. <button type="button" class="close" data-dismiss="alert">×</button></div>
+			</div>
+				<div class="panel-heading">Login</div>
+				<div class="panel-body">
+				<br />
+				<form method="post" action="j_security_check">
+					<span class="input-group-addon">E-mail:</span>
+					<input type="email" class="form-control" name="j_username" id="email" placeholder="E-mail"><br />
+					<span class="input-group-addon">Password</span>
+					<input type="password" class="form-control" name="j_password" id="pass" placeholder="Password"><br />
+					<button class="btn btn-default" id="loginBtn">Login</button>
+				</form>
+				</div>
+			<div class="col-lg-4"></div>		
 		</div>
-		<div class="formHolder">
-			
-			<br />
-			<form method="post" action="j_security_check">
-				<input type="email" name="j_username" id="email" placeholder="E-mail"><br />
-				<input type="password" name="j_password" id="pass" placeholder="Password"><br />
-				<button class="btn btn-default" id="loginBtn">Login</button>
-			</form>
-		</div>
+	</div>
 	</div>
 </body>

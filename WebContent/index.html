@@ -25,16 +25,27 @@
 			<a href="./index.html"><small>TF2Checker</small></a>
 		</div>
 		<a href=".\register.html"> <button class="btn btn-success">Register</button> </a>
+		<a href=".\login.html"> <button class="btn btn-info">Login</button> </a>
 		<div class="input-group pull-right col-lg-4">
 			<input type="text"class="form-control"  id="searchUserBox" >
 			<span class="input-group-btn">
-				 <button class="btn btn-default" id="search">Search</button>
+				 <button class="btn btn-default btn-primary" id="search">Search</button>
 			</span>
 		</div>
 	</div>
 	<div class="realBody">
+		<div class="jumbotron indexJumbo" id="indexJumbo">
+			<h1>Welcome to TF2Checker</h1>
+			<p style='max-width: 600px'> Here you can check your or your friends backpack values, or
+				or compare backpack by typing your Steam id64 or customId in the search box 
+				in the header.</p>
+			<span class="btn-group">
+				<a class="btn btn-success btn-lg " role="button" href=".\register.html">Register</a>
+				<a class="btn btn-info btn-lg " role="button" href=".\login.html">Login</a>
+			</span>
+		</div>
 		<div class='col-lg-4 userInfoContainer col-centered' id='userSearchResult'>
-		
+			
 		</div>
 		<!--<canvas id='BackpackChart' class ="col-lg-4" width='800' height="400">
 		ChartJS friggin sucks</canvas>-->

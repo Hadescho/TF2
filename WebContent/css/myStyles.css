@@ -22,7 +22,9 @@
 .logForm
 {
 	margin-top:60px;
-	margin-left: 40%;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
 }
 .realBody
 {
@@ -68,4 +70,18 @@
 .text-center{
 	text-align: center;
 	font-size: 18px;
+}
+.avatar{
+	max-width:80px;
+	max-height:80px;
+}
+.indexJumbo{
+	margin-top: 100px
+	margin-left: auto;
+	margin-right: auto;
+	
+	
+}
+.loginJumbo{
+	margin-left: 20px;
 }
