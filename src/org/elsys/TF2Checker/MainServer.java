@@ -58,7 +58,7 @@ public class MainServer {
 			return strigifier(myUser).toString();
 		}
 		System.out.println("Returning myUser");
-		System.out.println(securityContext.getUserPrincipal().getName());
+	
 		JSONObject myJ = strigifier(myUser);
 		System.out.println(myJ.toString(1));
 		return myJ.toString();

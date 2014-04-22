@@ -23,7 +23,7 @@ public class BackpackService {
 	
 	protected BackpackService(){
 		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+			Class.forName("org.apache.derby.jdbc.ClientDriver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
