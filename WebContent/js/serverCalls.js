@@ -33,7 +33,7 @@ function handleUserData(userData){
 	}
 	
 	
-	$(".userInfoContainer").append("<p class='.text-center' id='username'> " +user.username+ "</p>" +
+	$(".userInfoContainer").append("<p class='text-center' id='username'> " +user.username+ "</p>" +
 		"<img src='" + user.avatarURL +"' class='img-rounded col-lg-4'>"+ 
 		"<p class='col-lg-6'>" + user.location + "</p>" +
 		"<p class='col-lg-4' style=' color: "+ borderCol +" '>" + onlineText + "</p>"+
@@ -83,19 +83,25 @@ $(document).ready(function(){
 	});
 	$('#registerBtn').click(function(){
 	
-		var myUser = {};
-		myUser["email"] = $("#email").val();
-		myUser["password"] = $("#pass").val();
-		myUser["id64"] = $("#id64").val();
-		console.log(myUser.toString());
+//		var myUser = {};
+//		myUser["email"] = $("#email").val();
+//		myUser["password"] = $("#pass").val();
+//		myUser["id64"] = $("#id64").val();
+		var toSend = {
+			email: $("#email").val(),
+			password: $("#pass").val(),
+			id64: $('#id64').val(),
+		};
+		toSend = JSON.stringify(toSend);
+		console.log(toSend.toString());
 		$.ajax({
 			method:'POST',
 			url:'tf2/api/register',
-			data: myUser,
+			data: toSend,
 			contentType: 'application/json',
 			success: function(){
 				console.log("Sent");
-				window.navigate(".\index.html");
+				window.location.href="../org.elsys.TF2Checker/index.html"
 			}
 		});
 	});

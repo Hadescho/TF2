@@ -16,7 +16,6 @@ import javax.persistence.NamedQuery;
 	@NamedQuery(name="byBackpackId", query="SELECT u FROM DBUser u WHERE id64=:id64")
 })
 public class DBUser {
-	public static long idSub = 76561100000000000l;
 	@Id
 	long id;
 	

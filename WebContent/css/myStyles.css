@@ -8,15 +8,28 @@
     background-color: #0f0f0f;
     min-height: 150px;
     
-    margin-top: 0px;
-	margin-left: 15px;
+   
+   	float:right;
+	position:relative;
+	left:-33%;
+	
+	
+	padding: 10px;
 	color: #f7f7f7;
 	display: none;
 }
 
-.realBody
+.logForm
 {
 	margin-top:60px;
+	margin-left: 40%;
+}
+.realBody
+{
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
 }
 
 .graph
@@ -27,12 +40,32 @@
 
 .chartCC
 {
+	float:right;
+	position:relative;
+	left:-37%;
+	
     border: 1px, solid, #000;
     margin: 10px;
     clear: both;
 }
 .formHolder
 {
-   
     margin-top: 30px;
+}
+
+.hdr
+{
+	padding:10px;
+}
+.logo
+{
+	font-size:22px;
+}
+.logo a{
+	color: #a3a3a3;
+    text-decoration: none;
+}
+.text-center{
+	text-align: center;
+	font-size: 18px;
 }

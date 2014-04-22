@@ -16,10 +16,7 @@
 	<link rel="stylesheet" type="text/css" href=".\bootstrap\css\bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href=".\css\myStyles.css">
 </head>
-
-
 <body>
-
 	<div class="navbar-inverse hdr">
 		<div class="text-muted headerP col-lg-4 logo" >
 			<a href="./index.html"><small>TF2Checker</small></a>
@@ -32,18 +29,15 @@
 			</span>
 		</div>
 	</div>
-	<div class="realBody">
-		<div class='col-lg-4 userInfoContainer col-centered' id='userSearchResult'>
-		
+	
+	<div class="logForm">
+		<div class="formHolder">
+				<br />
+				<form method="post" action="j_security_check">
+					<input type="email" name="j_username" id="email" placeholder="E-mail"><br />
+					<input type="password" name="j_password" id="pass" placeholder="Password"><br />
+					<button class="btn btn-default" id="loginBtn">Login</button>
+				</form>
 		</div>
-		<!--<canvas id='BackpackChart' class ="col-lg-4" width='800' height="400">
-		ChartJS friggin sucks</canvas>-->
-		<br />
-		<div class="chartCC col-lg-4 col-centered" >
-			<div id="chartContainer" class="graph">
-			</div>
-		</div>
-  </div>
-
+	</div>
 </body>
-</html>

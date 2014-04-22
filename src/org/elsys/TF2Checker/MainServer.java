@@ -20,6 +20,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
@@ -28,6 +29,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.elsys.TF2Checker.models.SteamUser;
 import org.elsys.TF2Checker.models.DBUser;
 import org.elsys.TF2Checker.models.User;
+import org.hibernate.Session;
+import org.hibernate.internal.SessionFactoryImpl;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,16 +78,17 @@ public class MainServer {
 		System.out.println(myJ.toString(1));
 		return myJ.toString();
 	}
+	
 	@POST
-	@Path("/localUserSearch")
+	@Path("/api/login")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public static String GetLocalUser (JSONObject myJ){
-		String email = myJ.getString("email");
-		String password = myJ.getString("password");
-		User myUser = UserService.getInstance().getUsers(email, password);
-		System.out.println(myUser.email + "\t" + myUser.getId64());
-		return stringifier(myUser).toString();
+	public static void login(String input){
+		System.out.println(input);
+		JSONObject myObj = new JSONObject(input);
+		
+		User myUser = UserService.getInstance().getUsers(myObj.getString("email"), myObj.getString("password"));
+		
 	}
 	
 	@POST
@@ -92,6 +96,7 @@ public class MainServer {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public static void register(String input){
+		System.out.println(input);
 		JSONObject myObj = new JSONObject(input);
 		System.out.println(myObj.toString(6));
 		User myUser = new User(myObj.getString("email"), 
@@ -100,6 +105,7 @@ public class MainServer {
 		UserService.getInstance().createUser(myUser);
 		
 	}
+	
 	
 	private static JSONObject stringifier(User myUser){
 		JSONObject myJ = new JSONObject(myUser);
@@ -224,4 +230,5 @@ public class MainServer {
 		
 		return retValues.toString();
 	}
+	
 }

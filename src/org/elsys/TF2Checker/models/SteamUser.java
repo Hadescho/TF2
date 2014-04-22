@@ -108,9 +108,7 @@ public class SteamUser implements java.io.Serializable {
 				} catch (Exception ex) {
 					return -1.0f;
 				}
-
-			//}
-		}
+			}
 		 }
 		return -1.00f;
 	}
