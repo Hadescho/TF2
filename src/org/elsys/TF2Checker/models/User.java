@@ -1,5 +1,6 @@
 package org.elsys.TF2Checker.models;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -7,11 +8,15 @@ import java.util.Random;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import services.BackpackService;
 import services.UserService;
 
 @Entity(name="User1")
+@NamedQueries({@NamedQuery(name = "byUsername", query = "SELECT u FROM User1 u WHERE email=:email")})
 public class User {
 	@Id
 	private long id;
@@ -53,11 +58,12 @@ public class User {
 		return backpackValues;
 	}
 	
-	public User(String email, String password , long id64){ //Contructor for registration
+	public User(String email, String password , long id64) throws SQLException{ //Contructor for registration
 		this.id64 = id64;
 		this.password = password;
 		this.email = email;
 		this.id = Math.abs(new Random((new Date()).getTime()).nextLong());
+		this.backpackValues = BackpackService.getInstance().getBackpackValues(id64);
 	}
 	
 	public User(){  //Default constructor
@@ -67,7 +73,7 @@ public class User {
 		this.id = Math.abs(new Random((new Date()).getTime()).nextLong());
 	}
 	
-	public User(String email,String password){
+	public User(String email,String password) throws SQLException{
 		User u = UserService.getInstance().getUsers(email, password);
 		System.out.println("----------------- Is the user null?" + u.equals(null) + "---------------");
 	}

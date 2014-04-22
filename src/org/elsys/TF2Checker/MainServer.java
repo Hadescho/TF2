@@ -1,19 +1,12 @@
 package org.elsys.TF2Checker;
 
 
-import java.io.IOException;
-import java.net.ServerSocket;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.print.attribute.standard.Severity;
+import javax.servlet.*;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -23,14 +16,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
-import org.codehaus.jackson.annotate.JsonMethod;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.elsys.TF2Checker.models.SteamUser;
 import org.elsys.TF2Checker.models.DBUser;
+import org.elsys.TF2Checker.models.SteamUser;
 import org.elsys.TF2Checker.models.User;
-import org.hibernate.Session;
-import org.hibernate.internal.SessionFactoryImpl;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,12 +26,7 @@ import org.json.JSONObject;
 import services.BackpackService;
 import services.UserService;
 
-import com.github.koraktor.steamcondenser.*;
 import com.github.koraktor.steamcondenser.exceptions.SteamCondenserException;
-import com.github.koraktor.steamcondenser.steam.SteamPlayer;
-import com.github.koraktor.steamcondenser.steam.community.GameAchievement;
-import com.github.koraktor.steamcondenser.steam.community.GameStats;
-import com.github.koraktor.steamcondenser.steam.community.SteamGame;
 import com.github.koraktor.steamcondenser.steam.community.SteamId;
 
 @Path("")
@@ -74,6 +57,7 @@ public class MainServer {
 			return strigifier(myUser).toString();
 		}
 		System.out.println("Returning myUser");
+		System.out.println();
 		JSONObject myJ = strigifier(myUser);
 		System.out.println(myJ.toString(1));
 		return myJ.toString();
@@ -83,7 +67,7 @@ public class MainServer {
 	@Path("/api/login")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public static void login(String input){
+	public static void login(String input) throws JSONException, SQLException{
 		System.out.println(input);
 		JSONObject myObj = new JSONObject(input);
 		
@@ -95,7 +79,7 @@ public class MainServer {
 	@Path("/api/register")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public static void register(String input){
+	public static void register(String input) throws NumberFormatException, JSONException, SQLException{
 		System.out.println(input);
 		JSONObject myObj = new JSONObject(input);
 		System.out.println(myObj.toString(6));

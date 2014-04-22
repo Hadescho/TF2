@@ -1,5 +1,6 @@
 package services;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,30 +16,30 @@ public class UserService {
 	private static UserService INSTANCE;
 	private EntityManagerFactory emf;
 	
-	protected UserService(){
+	protected UserService() throws SQLException{
 		try{
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
 		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println("UserService constructor!!! /n/n/n/n/n/n/n/n !!!!");
 		emf = createEMF();
 	}
 	
-	public static UserService getInstance(){
+	public static UserService getInstance() throws SQLException{
 		if(INSTANCE == null){
 			INSTANCE = new UserService();
 		}
 		return INSTANCE;
 	}
 
-	private EntityManagerFactory createEMF() {
+	private EntityManagerFactory createEMF() throws SQLException {
 		EntityManagerFactory result = Persistence.createEntityManagerFactory("TF2Checker");
 		initTables(result);
 		return result;
 	}
 
-	private void initTables(EntityManagerFactory result) {
+	private void initTables(EntityManagerFactory result) throws SQLException {
 		EntityManager em = result.createEntityManager();
 		final EntityTransaction tx = em.getTransaction();
 		try {
