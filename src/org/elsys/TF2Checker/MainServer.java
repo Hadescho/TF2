@@ -1,12 +1,12 @@
 package org.elsys.TF2Checker;
 
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.*;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -15,6 +15,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.SecurityContext;
 
 import org.elsys.TF2Checker.models.DBUser;
 import org.elsys.TF2Checker.models.SteamUser;
@@ -38,7 +39,7 @@ public class MainServer {
 	@Path("/userSearch")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.TEXT_PLAIN)
-	public static String GetUserInfo (String userName) throws IOException, SteamCondenserException {
+	public static String GetUserInfo (@Context SecurityContext securityContext, String userName) throws IOException, SteamCondenserException {
 		SteamUser myUser;
 		try{
 			//SteamId user = SteamId.create(userName);
@@ -57,7 +58,7 @@ public class MainServer {
 			return strigifier(myUser).toString();
 		}
 		System.out.println("Returning myUser");
-		System.out.println();
+		System.out.println(securityContext.getUserPrincipal().getName());
 		JSONObject myJ = strigifier(myUser);
 		System.out.println(myJ.toString(1));
 		return myJ.toString();
