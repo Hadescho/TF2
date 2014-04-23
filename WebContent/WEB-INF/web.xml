@@ -39,7 +39,7 @@
   
 	<security-constraint>
 	<web-resource-collection>
-		<web-resource-name>UserView</web-resource-name>
+		<web-resource-name>user</web-resource-name>
 			<url-pattern>/user.html</url-pattern>
   		</web-resource-collection>
   		<auth-constraint>
@@ -49,7 +49,7 @@
 
 	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>rest</web-resource-name>
+			<web-resource-name>LocalUser</web-resource-name>
 			<url-pattern>/tf2/userPage</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>

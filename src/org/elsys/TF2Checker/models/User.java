@@ -26,6 +26,8 @@ public class User {
 	private String password;
 	@Column
 	public long id64;
+	@Column
+	public UserRole role;
 	@OneToMany
 	private List<DBUser > backpackValues;
 	
@@ -64,6 +66,7 @@ public class User {
 		this.email = email;
 		this.id = Math.abs(new Random((new Date()).getTime()).nextLong());
 		this.backpackValues = BackpackService.getInstance().getBackpackValues(id64);
+		this.role = UserRole.USER;
 	}
 	
 	public User(){  //Default constructor
@@ -71,11 +74,8 @@ public class User {
 		this.password = "default constructor";
 		this.email = "default constructor";
 		this.id = Math.abs(new Random((new Date()).getTime()).nextLong());
+		this.role = UserRole.USER;
 	}
 	
-	public User(String email,String password) throws SQLException{
-		User u = UserService.getInstance().getUsers(email, password);
-		System.out.println("----------------- Is the user null?" + u.equals(null) + "---------------");
-	}
 	
 }

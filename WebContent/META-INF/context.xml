@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context debug="9" reloadable="true">
+
+<Resource name="jdbc/HelloDB" auth="Container"
+type="javax.sql.DataSource"
+               username="app"
+               password="app"
+	           maxActive="100"
+               maxIdle="20"
+               testOnBorrow="true"
+ driverClassName="org.apache.derby.jdbc.ClientDriver"
+               
+               url="jdbc:derby://localhost:1527/MyDbTest;create=true"/>
+  
+	<Realm className="org.apache.catalina.realm.DataSourceRealm"
+	    dataSourceName="jdbc/HelloDB"
+		userTable="User1"
+		userNameCol="email"
+		userCredCol="password"
+		localDataSource="true" 
+		userRoleTable="Users" 
+		roleNameCol="role" /> 
+</Context>
