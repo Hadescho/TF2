@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -19,6 +20,7 @@ import services.UserService;
 @NamedQueries({@NamedQuery(name = "byUsername", query = "SELECT u FROM User1 u WHERE email=:email")})
 public class User {
 	@Id
+	@GeneratedValue
 	private long id;
 	@Column(unique=true)
 	public String email;
@@ -64,7 +66,7 @@ public class User {
 		this.id64 = id64;
 		this.password = password;
 		this.email = email;
-		this.id = Math.abs(new Random((new Date()).getTime()).nextLong());
+		//this.id = Math.abs(new Random((new Date()).getTime()).nextLong());
 		this.backpackValues = BackpackService.getInstance().getBackpackValues(id64);
 		this.role = UserRole.USER;
 	}
@@ -73,7 +75,7 @@ public class User {
 		this.id64 = 1;
 		this.password = "default constructor";
 		this.email = "default constructor";
-		this.id = Math.abs(new Random((new Date()).getTime()).nextLong());
+		//this.id = Math.abs(new Random((new Date()).getTime()).nextLong());
 		this.role = UserRole.USER;
 	}
 	
