@@ -58,24 +58,13 @@ public class MainServer {
 			return strigifier(myUser).toString();
 		}
 		System.out.println("Returning myUser");
-		System.out.println(securityContext.getUserPrincipal().getName());
-	
+		
+		
 		JSONObject myJ = strigifier(myUser);
 		System.out.println(myJ.toString(1));
 		return myJ.toString();
 	}
 	
-	@POST
-	@Path("/api/login")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public static void login(String input) throws JSONException, SQLException{
-		System.out.println(input);
-		JSONObject myObj = new JSONObject(input);
-		
-		User myUser = UserService.getInstance().getUsers(myObj.getString("email"), myObj.getString("password"));
-		
-	}
 	
 	@POST
 	@Path("/api/register")

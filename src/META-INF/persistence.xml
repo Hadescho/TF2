@@ -9,10 +9,10 @@
 		<properties>
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
-	    	<property name="hibernate.hbm2ddl.auto" value="create" />
+	    	<!-- <property name="hibernate.hbm2ddl.auto" value="create" /> -->
 			<property name="javax.persistence.jdbc.user" value="app" />
-			<property name="javax.persistence.jdbc.password" value="" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/tf2checker;create=true" />
+			<property name="javax.persistence.jdbc.password" value="app" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/tf2checker" />
 			<property name="hibernate.connection.autocommit" value="false"/>
 		</properties>
 	</persistence-unit>

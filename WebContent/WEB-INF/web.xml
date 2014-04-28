@@ -28,7 +28,7 @@
   	<role-name>*</role-name>
   </security-role>
   
-  <login-config>
+  	<login-config>
   	<auth-method>FORM</auth-method>
   	<realm-name>Login required</realm-name>
   	<form-login-config>
@@ -36,6 +36,10 @@
   		<form-error-page>/failed.html</form-error-page>
   	</form-login-config>
 	</login-config>
+	
+	<session-config>
+  		<session-timeout>3000</session-timeout>    <!-- 30 minutes -->
+	</session-config>
   
 	<security-constraint>
 	<web-resource-collection>

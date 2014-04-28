@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context debug="9" reloadable="true">
 
-<Resource name="jdbc/HelloDB" auth="Container"
+<Resource name="jdbc/tf2checker" auth="Container"
 type="javax.sql.DataSource"
                username="app"
                password="app"
@@ -10,14 +10,14 @@ type="javax.sql.DataSource"
                testOnBorrow="true"
  driverClassName="org.apache.derby.jdbc.ClientDriver"
                
-               url="jdbc:derby://localhost:1527/MyDbTest;create=true"/>
+               url="jdbc:derby://localhost:1527/tf2checker;create=true"/>
   
 	<Realm className="org.apache.catalina.realm.DataSourceRealm"
-	    dataSourceName="jdbc/HelloDB"
+	    dataSourceName="jdbc/tf2checker"
 		userTable="User1"
-		userNameCol="email"
-		userCredCol="password"
+		userNameCol="EMAIL"
+		userCredCol="PASSWORD"
 		localDataSource="true" 
-		userRoleTable="Users" 
-		roleNameCol="role" /> 
+		userRoleTable="User1" 
+		roleNameCol="ROLE" /> 
 </Context>

@@ -1,21 +1,8 @@
-Wed Apr 23 14:27:16 EEST 2014 : Apache Derby Network Server - 10.10.1.1 - (1458268) started and ready to accept connections on port 1527
+Mon Apr 28 13:33:26 EEST 2014 : Apache Derby Network Server - 10.10.1.1 - (1458268) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Wed Apr 23 14:28:00 EEST 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0145-8e56-ea70-ffffe2298128 
-on database directory E:\Developer\JavaProjects\org.elsys.TF2Checker\WebContent\WEB-INF\lib\tf2checker with class loader sun.misc.Launcher$AppClassLoader@6fbae5f5 
-Loaded from file:/E:/Developer/JavaProjects/org.elsys.TF2Checker/WebContent/WEB-INF/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_45-b18
-user.dir=E:\Developer\JavaProjects\org.elsys.TF2Checker\WebContent\WEB-INF\lib
-os.name=Windows 8
-os.arch=amd64
-os.version=6.2
-derby.system.home=E:\Developer\JavaProjects\org.elsys.TF2Checker\WebContent\WEB-INF\lib
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Wed Apr 23 14:28:25 EEST 2014:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance 5e838074-0145-8e56-ea70-ffffe2298128 
-on database directory E:\Developer\JavaProjects\org.elsys.TF2Checker\WebContent\WEB-INF\lib\MyDbTest with class loader sun.misc.Launcher$AppClassLoader@6fbae5f5 
+Mon Apr 28 13:33:35 EEST 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-0145-a7e5-6b72-ffffe2298128 
+on database directory E:\Developer\JavaProjects\org.elsys.TF2Checker\WebContent\WEB-INF\lib\tf2checker with class loader sun.misc.Launcher$AppClassLoader@574f7121 
 Loaded from file:/E:/Developer/JavaProjects/org.elsys.TF2Checker/WebContent/WEB-INF/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.7.0_45-b18
