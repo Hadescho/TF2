@@ -17,7 +17,10 @@ import services.BackpackService;
 import services.UserService;
 
 @Entity(name="User1")
-@NamedQueries({@NamedQuery(name = "byUsername", query = "SELECT u FROM User1 u WHERE email=:email")})
+@NamedQueries(
+		{@NamedQuery(name = "byUsername", query = "SELECT u FROM User1 u WHERE email=:email"),
+		@NamedQuery(name = "getID64", query = "SELECT u.id64 FROM User1 u WHERE email=:email")}
+		)
 public class User {
 	@Id
 	@GeneratedValue

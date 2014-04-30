@@ -38,13 +38,33 @@
 	</login-config>
 	
 	<session-config>
-  		<session-timeout>3000</session-timeout>    <!-- 30 minutes -->
+  		<session-timeout>30</session-timeout>    <!-- 3000 minutes -->
 	</session-config>
   
 	<security-constraint>
 	<web-resource-collection>
 		<web-resource-name>user</web-resource-name>
 			<url-pattern>/user.html</url-pattern>
+  		</web-resource-collection>
+  		<auth-constraint>
+  			<role-name>*</role-name>
+  		</auth-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+	<web-resource-collection>
+		<web-resource-name>login</web-resource-name>
+			<url-pattern>/login.html</url-pattern>
+  		</web-resource-collection>
+  		<auth-constraint>
+  			<role-name>*</role-name>
+  		</auth-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+	<web-resource-collection>
+		<web-resource-name>failed</web-resource-name>
+			<url-pattern>/failed.html</url-pattern>
   		</web-resource-collection>
   		<auth-constraint>
   			<role-name>*</role-name>

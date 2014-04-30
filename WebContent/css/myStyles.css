@@ -75,6 +75,10 @@
 	max-width:80px;
 	max-height:80px;
 }
+.avatarBig{
+	max-width:160px;
+	max-heigh:160px;
+}
 .indexJumbo{
 	margin-top: 100px
 	margin-left: auto;

@@ -1,61 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>TF2Checker</title>
-	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-	<script src="./bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
-	
-	
-	<script src="js/serverCalls.js"></script>
-	<script type="text/javascript" src="js/Chart.js"></script>
-	<script type="text/javascript" src="js/canvasjs.min.js"></script>
-	
-	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />	
-	<link rel="stylesheet" type="text/css" href=".\bootstrap\css\bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href=".\css\myStyles.css">
+<meta charset="UTF-8">
+<title>TF2Checker</title>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="./bootstrap/js/bootstrap.js" type="text/javascript"
+	charset="utf-8"></script>
+
+
+<script src="js/serverCalls.js"></script>
+<script src="js/user.js"></script>
+<script type="text/javascript" src="js/Chart.js"></script>
+<script type="text/javascript" src="js/canvasjs.min.js"></script>
+
+<link rel="stylesheet"
+	href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" type="text/css"
+	href=".\bootstrap\css\bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href=".\css\myStyles.css">
 </head>
 
 
 <body>
 
 	<div class="navbar-inverse hdr">
-		<div class="text-muted headerP col-lg-4 logo" >
+		<div class="text-muted headerP col-lg-4 logo">
 			<a href="./index.html"><small>TF2Checker</small></a>
 		</div>
-		<a href=".\register.html"> <button class="btn btn-success">Register</button> </a>
-		<a href=".\login.html"> <button class="btn btn-info">Login</button> </a>
+		<a href=".\register.html">
+			<button class="btn btn-success">Register</button>
+		</a> <!-- <a href=".\login.html">
+			<button class="btn btn-info">Login</button>
+		</a> -->
 		<div class="input-group pull-right col-lg-4">
-			<input type="text"class="form-control"  id="searchUserBox" >
+			<input type="text" class="form-control" id="searchUserBox">
 			<span class="input-group-btn">
-				 <button class="btn btn-default btn-primary" id="search">Search</button>
+				<button class="btn btn-default btn-primary" id="search">Search</button>
 			</span>
 		</div>
 	</div>
-	<div class="realBody">
-		<div class="row">
-			<div class="col-lg-3"></div>
-			<div class="well">
-				<div class="col-lg-1">
-					<!-- avatar here -->
-				</div>
-				<div class="col-lg-1">	</div>
-				<div class="col-lg-4">
-					<h3 id="username"></h3>
-					<p id="userLocation"></p>
+	<div class="container">
+		<div class="well">
+			<div id="avatar">
+				<!-- avatar here -->
+			</div>
+			<div class="row">
+				<div class="col-lg-3">
+					<h3 id="username"> <small id="userLocation"></small></h3>
 				</div>
 			</div>
-			<div class="col-lg-3"></div>
-		</div>
-		<div class="row">
-			<div class="col-lg-3"></div>
-			<div class="col-lg-6" id="userChart">
-				<!-- UserChart Here  -->
+			<div class="row">
+				<div class="col-lg-3" >
+					<small id="id64">ID64:</small>
+				</div>
 			</div>
-			<div class="col-lg-3"></div>
+			
+			<div class="row">
+				<div class="col-lg-3" id="onlineStatus"></div>
+				<div class="col-lg-3 col-lg-push-6 btn btn-default" id="logout">Logout</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-3"><h4 id="bpVal"><small>Backpack Value: </h4></div>
+				<div class="col-lg-3 col-lg-push-6 btn btn-default" data-toggle="modal" data-target="#editModal">Edit Account</div>
+			</div>
+			
+			
 		</div>
-  	</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-11" id="userChart" style="height: 350px;">
+						
+				</div>
+				
+					
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="editModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title">Change your id64</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<input type="text" class="form-control" id="changeIdBox" placeholder="New Id">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" id="changeUserId">Save changes</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
 </body>
 </html>

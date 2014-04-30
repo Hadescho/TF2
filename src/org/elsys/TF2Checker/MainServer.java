@@ -7,9 +7,11 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -39,11 +41,19 @@ public class MainServer {
 	@Path("/userSearch")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.TEXT_PLAIN)
-	public static String GetUserInfo (@Context SecurityContext securityContext, String userName) throws IOException, SteamCondenserException {
-		SteamUser myUser;
+	public static String GetUserInfo (@Context SecurityContext securityContext, String userName) throws IOException, SteamCondenserException, SQLException {
+		SteamUser myUser = null;
 		try{
-			//SteamId user = SteamId.create(userName);
-			if (userName.matches("[0-9]+") && userName.length() > 2) 
+			if (userName.equals("currentUser")){
+				if (!securityContext.equals(null))
+				{
+					String currentUser = securityContext.getUserPrincipal().getName();
+					System.out.println("---MyApp---" + currentUser);
+					long quRes = UserService.getInstance().getUserId64(securityContext);
+					myUser = new SteamUser(quRes);
+					System.out.println("---MyApp--- UserName" + myUser.username);
+				}
+			}else if (userName.matches("[0-9]+") && userName.length() > 2) 
 			{
 				Long id64 = Long.parseLong(userName);
 				myUser = new SteamUser(id64);
@@ -57,7 +67,7 @@ public class MainServer {
 			myUser = new SteamUser(-1);
 			return strigifier(myUser).toString();
 		}
-		System.out.println("Returning myUser");
+		System.out.println("---MyApp--- Returning myUser");
 		
 		
 		JSONObject myJ = strigifier(myUser);
@@ -73,10 +83,10 @@ public class MainServer {
 	public static void register(String input) throws NumberFormatException, JSONException, SQLException{
 		System.out.println(input);
 		JSONObject myObj = new JSONObject(input);
-		System.out.println(myObj.toString(6));
+		System.out.println("---MyApp--- " + myObj.toString(6));
 		User myUser = new User(myObj.getString("email"), 
 				myObj.getString("password"), Long.parseLong(myObj.getString("id64")));
-		System.out.println(myUser.email + "\t" + myUser.getPassword() + "\t" + myUser.id64);
+		System.out.println("---MyApp--- " + myUser.email + "\t" + myUser.getPassword() + "\t" + myUser.id64);
 		UserService.getInstance().createUser(myUser);
 		
 	}
@@ -111,7 +121,7 @@ public class MainServer {
 		ArrayList<Long > labels = new ArrayList<Long >();
 		ArrayList<Float> values = new ArrayList<Float >();
 		for(int i=0; i < backpackValues.size(); i++){
-			System.out.println(backpackValues.get(i).getId64() + "\t\t" + backpackValues.get(i).getValue() + "\t\t" + backpackValues.get(i).getFetchDate());
+			System.out.println("---MyApp--- " + backpackValues.get(i).getId64() + "\t\t" + backpackValues.get(i).getValue() + "\t\t" + backpackValues.get(i).getFetchDate());
 			labels.add((backpackValues.get(i).getFetchDate().getTime()));
 			values.add(backpackValues.get(i).getValue());
 			
@@ -157,12 +167,12 @@ public class MainServer {
 		ArrayList<Float> valuesFirst = new ArrayList<Float>();
 		ArrayList<Float>  valuesSecond = new ArrayList<Float>();
 		for(int i = 0; i < backpackValuesFirst.size(); i++){
-			System.out.println(backpackValuesFirst.get(i).getId64() + "\t\t" + backpackValuesFirst.get(i).getValue() + "\t\t" + backpackValuesFirst.get(i).getFetchDate());
+			System.out.println("---MyApp---" + backpackValuesFirst.get(i).getId64() + "\t\t" + backpackValuesFirst.get(i).getValue() + "\t\t" + backpackValuesFirst.get(i).getFetchDate());
 			labelsFirst.add((backpackValuesFirst.get(i).getFetchDate().getTime()));
 			valuesFirst.add(backpackValuesFirst.get(i).getValue());
 		}
 		for(int i = 0; i < backpackValuesSecond.size(); i++){
-			System.out.println(backpackValuesSecond.get(i).getId64() + "\t\t" + backpackValuesSecond.get(i).getValue() + "\t\t" + backpackValuesSecond.get(i).getFetchDate());
+			System.out.println("---MyApp---" + backpackValuesSecond.get(i).getId64() + "\t\t" + backpackValuesSecond.get(i).getValue() + "\t\t" + backpackValuesSecond.get(i).getFetchDate());
 			labelsSecond.add((backpackValuesSecond.get(i).getFetchDate().getTime()));
 			valuesSecond.add(backpackValuesSecond.get(i).getValue());
 		}
@@ -206,4 +216,21 @@ public class MainServer {
 		return retValues.toString();
 	}
 	
+	@POST
+    @Path("logout")
+	public void logout(@Context HttpServletRequest request) {
+		request.getSession().invalidate();
+	}
+	
+	@PUT
+	@Path("updateUser/{newUserId}")
+	public void updateUser(@Context SecurityContext securityContext,@PathParam("newUserId") String strNewUserID ) throws SQLException{
+
+		System.out.println("---MyApp--- Enter updateUser");
+		System.out.println("---MyApp--- Enter updateUser newUserId = " + strNewUserID);
+		long newUserID = Long.parseLong(strNewUserID);
+		if(!securityContext.equals(null))
+			System.out.println("---MyApp--- Enter updateUser's if!");
+			UserService.getInstance().updateUserId64(securityContext, newUserID);
+	}
 }

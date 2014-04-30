@@ -47,15 +47,25 @@ function handleUserData(userData){
 }
 
 $(document).ready(function(){
+	var urlString = window.location.toString();
+	var searchBox = $("#searchUserBox");
+	var isIndex = window.location.toString().indexOf('index');
+	var SearchBoxToAdd;
 	
 	
-	$('#search').click(function(){
+	$('#search').on('click',function(){
+		
+		var userName = searchBox.val();
+		console.log("enter isIndex -1 ");
+		if (isIndex === -1){
+			window.location.href= "../org.elsys.TF2Checker/index.html?id=" + userName; 
+		}
 		$("#indexJumbo").fadeOut(500);
 		$(".userInfoContainer").fadeOut(500);
 		$("#chartContainer").html("");
 		$(".userInfoContainer").html("");
-		var searchBox = $("#searchUserBox");
-		var userName = searchBox.val();
+		
+		
 		if (userName !== "")
 			if (!(userName.indexOf(',') + 1 || userName.indexOf(' ') + 1 || userName.indexOf('&') + 1)){
 				console.log('Normal search');
@@ -83,6 +93,14 @@ $(document).ready(function(){
 			});	
 			}
 	});
+	if ((urlString.indexOf('?id') > -1))
+	{
+		
+		SearchBoxToAdd = urlString.substr(urlString.indexOf('?id')+4);
+		console.log(SearchBoxToAdd);
+		searchBox.val(SearchBoxToAdd.toString());
+		$('#search').trigger("click");
+	}
 	$('#registerBtn').click(function(){
 	
 //		var myUser = {};
@@ -141,3 +159,4 @@ function formatDates(backpackJSON)
 	}
 	return backpackJSON;
 }
+
